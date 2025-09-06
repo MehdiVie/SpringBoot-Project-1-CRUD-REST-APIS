@@ -2,8 +2,6 @@ package net.javaguides.springboot.controller;
 
 import lombok.AllArgsConstructor;
 import net.javaguides.springboot.dto.UserDto;
-import net.javaguides.springboot.entity.User;
-import net.javaguides.springboot.mapper.UserMapper;
 import net.javaguides.springboot.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,17 +34,17 @@ public class UserController {
     // build Get All Users by ID Rest API
     // http://localhost:9090/api/users
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
     // build Update user Rest API
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user,
-                                           @PathVariable("id") Long userId) {
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user,
+                                              @PathVariable("id") Long userId) {
         user.setId(userId);
-        User updatedUser = userService.updateUser(user);
+        UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser , HttpStatus.OK);
     }
 
