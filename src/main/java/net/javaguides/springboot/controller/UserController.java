@@ -54,6 +54,4 @@ public class UserController {
         return new ResponseEntity<>("Student deleted successfully!" , HttpStatus.OK);
     }
 
-
-
 }
