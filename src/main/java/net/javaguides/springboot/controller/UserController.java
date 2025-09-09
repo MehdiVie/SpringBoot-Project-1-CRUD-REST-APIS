@@ -1,5 +1,6 @@
 package net.javaguides.springboot.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.javaguides.springboot.dto.UserDto;
 import net.javaguides.springboot.exception.ErrorDetails;
@@ -24,7 +25,7 @@ public class UserController {
 
     // build Create user Rest API
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user) {
         UserDto savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser , HttpStatus.CREATED);
     }
@@ -47,7 +48,7 @@ public class UserController {
 
     // build Update user Rest API
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user,
+    public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto user,
                                               @PathVariable("id") Long userId) {
         user.setId(userId);
         UserDto updatedUser = userService.updateUser(user);
