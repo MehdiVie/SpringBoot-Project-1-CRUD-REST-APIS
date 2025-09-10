@@ -1,21 +1,23 @@
 package net.javaguides.springboot.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.javaguides.springboot.dto.UserDto;
-import net.javaguides.springboot.exception.ErrorDetails;
-import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.time.LocalTime.now;
 
+
+@Tag(
+        name = "Crud Rest APIs for User Resource",
+        description = "Crud Rest APIs - Create User, Update User, Get User, Get All Users, Delete User"
+)
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/users")
@@ -23,6 +25,14 @@ public class UserController {
 
     private UserService userService;
 
+    @Operation(
+            summary = "Create User Rest API",
+            description = "Create User Rest API to save User in database"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "HTTP STATUS CODE 201 CREATED"
+    )
     // build Create user Rest API
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user) {
@@ -30,6 +40,14 @@ public class UserController {
         return new ResponseEntity<>(savedUser , HttpStatus.CREATED);
     }
 
+    @Operation(
+            summary = "Get User by Id Rest API",
+            description = "Get User by Id Rest API to get a single User from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS CODE 200 SUCCESS"
+    )
     // build Get User by ID Rest API
     // http://localhost:9090/api/users/1
     @GetMapping("{id}")
@@ -38,6 +56,14 @@ public class UserController {
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Get All Users Rest API",
+            description = "Get All UsersRest API to get all Users from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS CODE 200 SUCCESS"
+    )
     // build Get All Users by ID Rest API
     // http://localhost:9090/api/users
     @GetMapping
@@ -46,6 +72,14 @@ public class UserController {
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Update User Rest API",
+            description = "Update User API to update a particular User from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS CODE 200 SUCCESS"
+    )
     // build Update user Rest API
     @PutMapping("{id}")
     public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto user,
@@ -55,6 +89,14 @@ public class UserController {
         return new ResponseEntity<>(updatedUser , HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Delete User Rest API",
+            description = "Delete User API to delete a particular User from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS CODE 200 SUCCESS"
+    )
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId) {
         userService.deleteUser(userId);
